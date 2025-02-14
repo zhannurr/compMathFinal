@@ -9,11 +9,11 @@ def cutie_style(widget):
     style.configure("TFrame", background="#baf6ff")
     style.configure("TButton", font=("Arial", 15), padding=6)
     style.configure("TLabel", font=("Arial", 17), background="#f0f0f0")
-    style.configure("TCombobox", font=("Arial", 50), padding=5)
+    style.configure("TCombobox", font=("Arial", 20), padding=5)
     
     widget.configure(background="#baf6ff")
 
-def show_task_inputs():
+def show_task_inputs(*args):
     for widget in frame.winfo_children():
         widget.destroy()
     
@@ -27,20 +27,22 @@ def show_task_inputs():
 
 root = tk.Tk()
 root.title("Select Task")
-root.geometry("900x600")  # Set window size
-root.eval('tk::PlaceWindow . center')  # Center window
+root.geometry("900x600")  
+root.eval('tk::PlaceWindow . center') 
 cutie_style(root)
 
 main_frame = ttk.Frame(root, padding=10)
-main_frame.place(relx=0.5, rely=0.3, anchor="center")  # Center main frame
+main_frame.place(relx=0.5, rely=0.3, anchor="center")  
 
 task_var = tk.StringVar(value='Task 1')
+task_var.trace_add("write", show_task_inputs)  
+
 task_menu = ttk.Combobox(main_frame, textvariable=task_var, values=['Task 1', 'Task 2', 'Task 3'], font=("Arial", 20), width=25)
 task_menu.pack(pady=10)
 
-ttk.Button(main_frame, text="Next", command=show_task_inputs).pack(pady=10)
-
 frame = ttk.Frame(root, padding=10)
-frame.place(relx=0.5, rely=0.6, anchor="center")  # Center task-specific frame
+frame.place(relx=0.5, rely=0.6, anchor="center") 
+
+show_task_inputs() 
 
 root.mainloop()
