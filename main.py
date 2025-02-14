@@ -32,7 +32,7 @@ root.eval('tk::PlaceWindow . center')
 cutie_style(root)
 
 main_frame = ttk.Frame(root, padding=10)
-main_frame.place(relx=0.5, rely=0.3, anchor="center")  
+main_frame.place(relx=0.5, rely=0.15, anchor="center")  # Поднял выбор выше
 
 task_var = tk.StringVar(value='Task 1')
 task_var.trace_add("write", show_task_inputs)  
