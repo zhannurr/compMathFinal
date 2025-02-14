@@ -32,19 +32,28 @@ def newton_raphson(f, df, x0, tol=1e-6, max_iter=100):
     return x
 
 def show_task2_inputs(frame):
-    ttk.Label(frame, text="Interval [a, b]:").grid(row=0, column=0)
-    entry_a = ttk.Entry(frame)
-    entry_a.grid(row=0, column=1)
-    entry_b = ttk.Entry(frame)
-    entry_b.grid(row=0, column=2)
+    for widget in frame.winfo_children():
+        widget.destroy()
     
-    ttk.Label(frame, text="Initial Guess x0:").grid(row=1, column=0)
+    style = ttk.Style()
+    style.configure("TLabel", font=("Arial", 15), background="#baf6ff")
+    style.configure("TButton", font=("Arial", 15), padding=6)
+    style.configure("TEntry", font=("Arial", 15), padding=5)
+    style.configure("TCombobox", font=("Arial", 15), padding=5)
+    
+    ttk.Label(frame, text="Interval [a, b]:").pack(pady=5)
+    entry_a = ttk.Entry(frame)
+    entry_a.pack(pady=5)
+    entry_b = ttk.Entry(frame)
+    entry_b.pack(pady=5)
+    
+    ttk.Label(frame, text="Initial Guess x0:").pack(pady=5)
     entry_x0 = ttk.Entry(frame)
-    entry_x0.grid(row=1, column=1)
+    entry_x0.pack(pady=5)
     
     method_var = tk.StringVar(value='False Position')
     method_menu = ttk.Combobox(frame, textvariable=method_var, values=['False Position', 'Newton-Raphson'])
-    method_menu.grid(row=2, column=1)
+    method_menu.pack(pady=5)
     
     def calculate_root():
         try:
@@ -61,6 +70,6 @@ def show_task2_inputs(frame):
         except Exception as e:
             result_label.config(text=f"Error: {str(e)}")
     
-    ttk.Button(frame, text="Calculate Root", command=calculate_root).grid(row=3, column=1)
+    ttk.Button(frame, text="Calculate Root", command=calculate_root).pack(pady=10)
     result_label = ttk.Label(frame, text="Result: ")
-    result_label.grid(row=4, column=1)
+    result_label.pack(pady=5)
