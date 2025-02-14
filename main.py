@@ -2,6 +2,8 @@ import tkinter as tk
 from tkinter import ttk
 from task1 import plot_graph
 from task2 import show_task2_inputs
+from task3 import show_task3_inputs
+
 
 def show_task_inputs():
     for widget in frame.winfo_children():
@@ -10,8 +12,13 @@ def show_task_inputs():
     task = task_var.get()
     if task == 'Task 1':
         ttk.Button(frame, text="Plot Graph", command=plot_graph).grid(row=0, column=0)
-    else:
+    elif task == 'Task 2':
         show_task2_inputs(frame)
+    elif task=='Task 3':
+        show_task3_inputs(frame)
+
+
+        
 
 root = tk.Tk()
 root.title("Select Task")
@@ -20,7 +27,7 @@ main_frame = ttk.Frame(root, padding=10)
 main_frame.grid(row=0, column=0)
 
 task_var = tk.StringVar(value='Task 1')
-task_menu = ttk.Combobox(main_frame, textvariable=task_var, values=['Task 1', 'Task 2'])
+task_menu = ttk.Combobox(main_frame, textvariable=task_var, values=['Task 1', 'Task 2', 'Task 3'])
 task_menu.grid(row=0, column=0)
 
 ttk.Button(main_frame, text="Next", command=show_task_inputs).grid(row=0, column=1)
