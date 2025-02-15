@@ -18,17 +18,20 @@ def false_position(f, a, b, tol=1e-6, max_iter=100):
         raise ValueError("Function must have opposite signs at a and b")
 
     iter_count = 0
-    c_old = a
+    c = a  # Initial guess
     for _ in range(max_iter):
+        c_old = c
         c = (a * f(b) - b * f(a)) / (f(b) - f(a))
         iter_count += 1
+
         if abs(f(c)) < tol or abs(c - c_old) < tol:
             return c, iter_count, abs((c - c_old) / c) if c != 0 else 0
+
         if f(a) * f(c) < 0:
             b = c
         else:
             a = c
-        c_old = c
+
     return c, iter_count, abs((c - c_old) / c) if c != 0 else 0
 
 

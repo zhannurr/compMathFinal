@@ -31,6 +31,7 @@ def show_task6_inputs(frame):
     result_label = ttk.Label(frame, text="Result: ", font=("Arial", 15), background="#baf6ff")
     result_label.pack(pady=10)
 
+    # Function to compute the first derivative
     def calculate_forward_difference():
         """Handles input parsing, error checking, and derivative computation."""
         try:
@@ -42,6 +43,7 @@ def show_task6_inputs(frame):
                 result_label.config(text="Error: Need at least 3 data points")
                 return
 
+            # Compute the derivative using Newton’s Forward Difference Formula
             result = newtons_forward_difference(np.array(x_values), np.array(y_values), x_target)
             result_label.config(text=f"First Derivative at x={x_target}: {result:.6f}")
         except ValueError:
