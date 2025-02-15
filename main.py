@@ -2,17 +2,14 @@ import tkinter as tk
 from tkinter import *
 from tkinter import ttk
 
-import task1
 from task1 import plot_graph
 from task2 import show_task2_inputs
 from task3 import show_task3_inputs
 from task4 import show_task4_inputs
 from task5 import show_task5_inputs
-from task6 import task6
+from task6 import show_task6_inputs
 from task7 import show_task7_inputs
-from task8 import task8
-from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
-import matplotlib.pyplot as plt
+from task8 import show_task8_inputs
 
 def cutie_style(widget):
     style = ttk.Style()
@@ -28,7 +25,6 @@ def show_task_inputs(*args):
         widget.destroy()
     
     task = task_var.get()
-    button = ttk.Button(frame, text="Task 1", command=task1)
     if task == 'Task 1':
         ttk.Button(frame, text="Plot Graph", command=plot_graph).pack(pady=10)
     elif task == 'Task 2':
@@ -40,20 +36,16 @@ def show_task_inputs(*args):
     elif task == 'Task 5':
         show_task5_inputs(frame)
     elif task == 'Task 6':
-        ttk.Button(frame, text="Calculate", command=task6).pack(pady=10)
+        show_task6_inputs(frame)
     elif task == 'Task 7':
         show_task7_inputs(frame)
     elif task == 'Task 8':
-        # button.pack(frame, text="Calculate", command=task8, pady=10)
-        ttk.Button(frame, text="Plot Graph", command=task8).pack(pady=10)
+        show_task8_inputs(frame)
 
 
 root = Tk()
 root.title("Select Task")
-# root.anchor("center")
-root.geometry("900x600")         # TODO
-# root.justify = "center"
-# root.eval('tk::PlaceWindow . center')
+root.geometry("900x600")
 cutie_style(root)
 
 main_frame = ttk.Frame(root)
@@ -70,8 +62,6 @@ frame.place(relx=0.5, rely=0.6, anchor="center")
 
 plot_frame = ttk.Frame(root)
 plot_frame.place(relx=0.5, rely=0.85, anchor="center")
-
-# canvas = Canvas(root, height=300, width=250)
 
 show_task_inputs() 
 

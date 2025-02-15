@@ -1,99 +1,50 @@
 import numpy as np
-import matplotlib.pyplot as plt
+from tkinter import ttk
 
 
-# Task 8: Simpson's 1/3 Rule
-def f(x):
-    """
-    Function to integrate: sin(x)
-    """
-    return np.sin(x)
+# Function to compute first derivative using Newton’s Forward Difference Formula
+def newtons_forward_difference(x, y, x_target):
+    h = x[1] - x[0]  # Step size
+    dy_dx = (y[1] - y[0]) / h + ((y[2] - 2 * y[1] + y[0]) / (2 * h))  # Formula for first derivative
+    return dy_dx
 
 
-def simpsons_rule(f, a, b, n):
-    """
-    Simpson's 1/3 Rule for numerical integration
-    :param f: Function to integrate
-    :param a: Lower limit
-    :param b: Upper limit
-    :param n: Number of subintervals (must be even)
-    :return: Approximate integral value
-    """
-    if n % 2 == 1:
-        raise ValueError("Number of subintervals must be even.")
+# Function to display input fields for Task 6
+def show_task6_inputs(frame):
+    """Creates UI elements to input values for Newton’s Forward Difference Formula."""
+    for widget in frame.winfo_children():
+        widget.destroy()
 
-    h = (b - a) / n  # Step size
-    x = np.linspace(a, b, n + 1)  # Generate n+1 points
-    y = f(x)  # Evaluate function at these points
+    ttk.Label(frame, text="Newton’s Forward Difference Formula", font=("Arial", 15), background="#baf6ff").pack(pady=10)
+    ttk.Label(frame, text="Enter X values (comma separated):", font=("Arial", 12), background="#baf6ff").pack()
+    x_entry = ttk.Entry(frame, font=("Arial", 12))
+    x_entry.pack(pady=5)
 
-    # Apply Simpson's Rule formula
-    integral = (h / 3) * (y[0] + 4 * sum(y[1:n:2]) + 2 * sum(y[2:n - 1:2]) + y[n])
-    return integral
+    ttk.Label(frame, text="Enter Y values (comma separated):", font=("Arial", 12), background="#baf6ff").pack()
+    y_entry = ttk.Entry(frame, font=("Arial", 12))
+    y_entry.pack(pady=5)
 
+    ttk.Label(frame, text="Enter Target X:", font=("Arial", 12), background="#baf6ff").pack()
+    x_target_entry = ttk.Entry(frame, font=("Arial", 12))
+    x_target_entry.pack(pady=5)
 
-def plot_function(f, a, b, n):
-    """
-    Plot the function and show Simpson's rule approximation.
-    """
-    x = np.linspace(a, b, 100)
-    y = f(x)
+    result_label = ttk.Label(frame, text="Result: ", font=("Arial", 15), background="#baf6ff")
+    result_label.pack(pady=10)
 
-    # Plot the function
-    plt.plot(x, y, label='sin(x)', color='blue')
+    def calculate_forward_difference():
+        """Handles input parsing, error checking, and derivative computation."""
+        try:
+            x_values = list(map(float, x_entry.get().split(',')))
+            y_values = list(map(float, y_entry.get().split(',')))
+            x_target = float(x_target_entry.get())
 
-    # Plot the sample points
-    x_nodes = np.linspace(a, b, n + 1)
-    y_nodes = f(x_nodes)
-    plt.scatter(x_nodes, y_nodes, color='red', label='Sample Points')
+            if len(x_values) < 3 or len(y_values) < 3:
+                result_label.config(text="Error: Need at least 3 data points")
+                return
 
-    plt.xlabel('x')
-    plt.ylabel('sin(x)')
-    plt.title("Simpson's Rule Approximation")
-    plt.legend()
-    plt.grid()
-    plt.show()
+            result = newtons_forward_difference(np.array(x_values), np.array(y_values), x_target)
+            result_label.config(text=f"First Derivative at x={x_target}: {result:.6f}")
+        except ValueError:
+            result_label.config(text="Error: Invalid input")
 
-
-def task6():
-    # Given limits and subintervals
-    a = 0
-    b = np.pi
-    n = 10  # Number of subintervals (must be even)
-
-    # Compute numerical integral
-    approx_integral = simpsons_rule(f, a, b, n)
-
-    # Exact integral value
-    exact_integral = 2
-
-    # Error estimation
-    error = abs(exact_integral - approx_integral)
-
-    # Output results
-    print(f"Approximate Integral: {approx_integral:.6f}")
-    print(f"Exact Integral: {exact_integral:.6f}")
-    print(f"Absolute Error: {error:.6f}")
-
-    # Plot the function and Simpson's Rule approximation
-    plot_function(f, a, b, n)
-
-
-    # Task 6: Newton’s Forward Difference Formula
-    def newtons_forward_difference(x, y, x_target):
-        """
-        Compute first derivative using Newton's Forward Difference Formula.
-        """
-        h = x[1] - x[0]
-        dy_dx = (y[1] - y[0]) / h + ((y[2] - 2 * y[1] + y[0]) / (2 * h))
-        return dy_dx
-
-
-    # Given data points
-    x_values = np.array([0, 1, 2])
-    y_values = np.array([1, 3, 7])
-    x_target = 1
-
-    # Compute derivative at x=1
-    first_derivative = newtons_forward_difference(x_values, y_values, x_target)
-    print("\nTask 6: Newton’s Forward Difference Formula")
-    print(f"First Derivative at x={x_target}: {first_derivative:.6f}")
+    ttk.Button(frame, text="Compute Derivative", command=calculate_forward_difference, style="TButton").pack(pady=10)

@@ -1,88 +1,74 @@
-from tkinter import ttk
 import numpy as np
 import matplotlib.pyplot as plt
+from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
+import tkinter as tk
+from tkinter import ttk
+
+
+# Function to compute integral using Simpson’s 3/8 Rule
+def simpsons_three_eighth_rule(f, a, b, n):
+    """Approximates the integral of f(x) from a to b using Simpson's 3/8 Rule with n subintervals."""
+    if n % 3 != 0:
+        raise ValueError("n must be a multiple of 3")
+
+    x = np.linspace(a, b, n + 1)
+    h = (b - a) / n
+    y = f(x)
+
+    integral = (3 * h / 8) * (y[0] + 3 * sum(y[1:n:3]) + 3 * sum(y[2:n:3]) + 2 * sum(y[3:n - 1:3]) + y[n])
+    return integral, x, y
 
 
 def f(x):
-    """
-    Function to integrate: sin(x)
-    """
-    return np.sin(x)
+    """Defines the function to integrate: f(x) = x^3."""
+    return x ** 3
 
-def simpsons_rule(f, a, b, n):
-    """
-    Simpson's 1/3 Rule for numerical integration
-    :param f: Function to integrate
-    :param a: Lower limit
-    :param b: Upper limit
-    :param n: Number of subintervals (must be even)
-    :return: Approximate integral value
-    """
-    if n % 2 == 1:
-        raise ValueError("Number of subintervals must be even.")
 
-    h = (b - a) / n  # Step size
-    x = np.linspace(a, b, n + 1)  # Generate n+1 points
-    y = f(x)  # Evaluate function at these points
+# Function to display input fields for Task 8
+def show_task8_inputs(frame):
+    """Creates UI elements to input values for Simpson’s 3/8 Rule integration."""
+    for widget in frame.winfo_children():
+        widget.destroy()
 
-    # Apply Simpson's Rule formula
-    integral = (h / 3) * (y[0] + 4 * sum(y[1:n:2]) + 2 * sum(y[2:n - 1:2]) + y[n])
-    return integral
+    ttk.Label(frame, text="Simpson’s 3/8 Rule", font=("Arial", 15), background="#baf6ff").pack(pady=10)
+    ttk.Label(frame, text="Enter Lower Limit (a):", font=("Arial", 12), background="#baf6ff").pack()
+    a_entry = ttk.Entry(frame, font=("Arial", 12))
+    a_entry.pack(pady=5)
 
-def plot_function(f, a, b, n):
-    """
-    Plot the function and show Simpson's rule approximation.
-    """
-    x = np.linspace(a, b, 100)
-    y = f(x)
+    ttk.Label(frame, text="Enter Upper Limit (b):", font=("Arial", 12), background="#baf6ff").pack()
+    b_entry = ttk.Entry(frame, font=("Arial", 12))
+    b_entry.pack(pady=5)
 
-    # Plot the function
-    plt.plot(x, y, label='sin(x)', color='blue')
+    ttk.Label(frame, text="Enter Number of Intervals (n, multiple of 3):", font=("Arial", 12),
+              background="#baf6ff").pack()
+    n_entry = ttk.Entry(frame, font=("Arial", 12))
+    n_entry.pack(pady=5)
 
-    # Plot the sample points
-    x_nodes = np.linspace(a, b, n + 1)
-    y_nodes = f(x_nodes)
-    plt.scatter(x_nodes, y_nodes, color='red', label='Sample Points')
+    result_label = ttk.Label(frame, text="Result: ", font=("Arial", 15), background="#baf6ff")
+    result_label.pack(pady=10)
 
-    plt.xlabel('x')
-    plt.ylabel('sin(x)')
-    plt.title("Simpson's Rule Approximation")
-    plt.legend()
-    plt.grid()
-    plt.show()
+    compute_button = ttk.Button(frame, text="Compute Integral")
+    compute_button.pack(pady=10)
 
-def task8():
-    # for widget in frame.winfo_children():
-    #     widget.destroy()
-    #
-    # style = ttk.Style()
-    # style.configure("TLabel", font=("Arial", 15), background="#baf6ff")
-    # style.configure("TButton", font=("Arial", 15), padding=6)
-    # style.configure("TEntry", font=("Arial", 15), padding=5)
-    # style.configure("TCombobox", font=("Arial", 15), padding=5)
+    def calculate_simpsons_three_eighth_rule():
+        """Handles input parsing, error checking, calculation, and visualization of the integral."""
+        try:
+            a = float(a_entry.get())
+            b = float(b_entry.get())
+            n = int(n_entry.get())
 
-    # Given limits and subintervals
-    a = 0
-    b = np.pi
-    n = 10  # Number of subintervals (must be even)
-    # entry_a = ttk.Entry(frame)
-    # entry_a.pack(pady=5)
-    # entry_b = ttk.Entry(frame)
-    # entry_b.pack(pady=5)
+            if n % 3 != 0:
+                result_label.config(text="Error: n must be a multiple of 3.")
+                return
 
-    # Compute numerical integral
-    approx_integral = simpsons_rule(f, a, b, n)
+            approx_integral, x_vals, y_vals = simpsons_three_eighth_rule(f, a, b, n)
+            exact_integral = (b ** 4 / 4) - (a ** 4 / 4)  # Exact integral of x^3 from a to b
+            absolute_error = abs(exact_integral - approx_integral)
 
-    # Exact integral value
-    exact_integral = 2
+            result_label.config(
+                text=f"Approximate Integral: {approx_integral:.6f}\nAbsolute Error: {absolute_error:.6f}")
 
-    # Error estimation
-    error = abs(exact_integral - approx_integral)
+        except ValueError:
+            result_label.config(text="Error: Invalid input")
 
-    # Output results
-    print(f"Approximate Integral: {approx_integral:.6f}")
-    print(f"Exact Integral: {exact_integral:.6f}")
-    print(f"Absolute Error: {error:.6f}")
-
-    # Plot the function and Simpson's Rule approximation
-    plot_function(f, a, b, n)
+    compute_button.config(command=calculate_simpsons_three_eighth_rule)
