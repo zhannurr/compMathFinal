@@ -9,7 +9,7 @@ from task3 import show_task3_inputs
 from task4 import show_task4_inputs
 from task5 import show_task5_inputs
 from task6 import task6
-from task7 import task7
+from task7 import show_task7_inputs
 from task8 import task8
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 import matplotlib.pyplot as plt
@@ -42,7 +42,7 @@ def show_task_inputs(*args):
     elif task == 'Task 6':
         ttk.Button(frame, text="Calculate", command=task6).pack(pady=10)
     elif task == 'Task 7':
-        ttk.Button(frame, text="Calculate", command=task7).pack(pady=10)
+        show_task7_inputs(frame)
     elif task == 'Task 8':
         # button.pack(frame, text="Calculate", command=task8, pady=10)
         ttk.Button(frame, text="Plot Graph", command=task8).pack(pady=10)
