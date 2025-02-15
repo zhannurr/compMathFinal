@@ -28,6 +28,7 @@ def show_task7_inputs(frame):
         widget.destroy()
 
     # Input for initial condition y(0)
+    # ttk.Label(frame, text="Taylor Series Method", font=("Arial", 15), background="#baf6ff").pack(pady=5)
     ttk.Label(frame, text="Enter initial condition y(0) =", font=("Arial", 15)).grid(row=0, column=0, padx=5, pady=5)
     y0_entry = ttk.Entry(frame, width=10, font=("Arial", 15))
     y0_entry.grid(row=0, column=1, padx=5, pady=5)
@@ -37,6 +38,7 @@ def show_task7_inputs(frame):
     ttk.Label(frame, text="Compute y at x =", font=("Arial", 15)).grid(row=1, column=0, padx=5, pady=5)
     x_entry = ttk.Entry(frame, width=10, font=("Arial", 15))
     x_entry.grid(row=1, column=1, padx=5, pady=5)
+    x_entry.insert(0, "0.1")
 
     result_label = ttk.Label(frame, text="Result: ", font=("Arial", 15))
     result_label.grid(row=3, column=0, columnspan=2, pady=10)

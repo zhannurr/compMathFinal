@@ -61,3 +61,5 @@ def show_task4_inputs(frame):
     # Button to start the computation
     ttk.Button(frame, text="Compute Inverse", command=calculate_inverse, style="TButton").grid(row=size + 1, column=0,
                                                                                                columnspan=4, pady=10)
+
+

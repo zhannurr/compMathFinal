@@ -1,5 +1,4 @@
 import numpy as np
-import tkinter as tk
 from tkinter import ttk
 import matplotlib.pyplot as plt
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
@@ -55,7 +54,7 @@ def show_task5_inputs(frame):
             m, b = linear_least_squares(x_values, y_values)
             result_label.config(text=f"Equation: y = {m:.4f}x + {b:.4f}")
 
-            plot_graph(x_values, y_values, m, b)
+            plot_graph(x_values, y_values, m, b, frame)
         except ValueError:
             result_label.config(text="Error: Invalid input")
 
@@ -64,7 +63,7 @@ def show_task5_inputs(frame):
 
 
 # Function to plot the graph
-def plot_graph(x, y, m, b):
+def plot_graph(x, y, m, b, frame):
     fig, ax = plt.subplots(figsize=(5, 4))  # Create the figure for the plot
     ax.scatter(x, y, color='red', label='Data Points')  # Display data points
 
@@ -80,9 +79,9 @@ def plot_graph(x, y, m, b):
     ax.legend()
 
     # Clear previous graph and display the new one
-    for widget in plot_frame.winfo_children():
-        widget.destroy()
+    # for widget in frame.winfo_children():
+    #     widget.destroy()
 
-    canvas = FigureCanvasTkAgg(fig, master=plot_frame)
+    canvas = FigureCanvasTkAgg(fig, master=frame)
     canvas.draw()
     canvas.get_tk_widget().pack()

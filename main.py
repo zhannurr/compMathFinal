@@ -2,7 +2,7 @@ import tkinter as tk
 from tkinter import *
 from tkinter import ttk
 
-from task1 import plot_graph
+from task1 import show_task1_inputs
 from task2 import show_task2_inputs
 from task3 import show_task3_inputs
 from task4 import show_task4_inputs
@@ -26,7 +26,7 @@ def show_task_inputs(*args):
     
     task = task_var.get()
     if task == 'Task 1':
-        ttk.Button(frame, text="Plot Graph", command=plot_graph).pack(pady=10)
+        show_task1_inputs(frame)
     elif task == 'Task 2':
         show_task2_inputs(frame)
     elif task == 'Task 3':
@@ -45,7 +45,7 @@ def show_task_inputs(*args):
 
 root = Tk()
 root.title("Select Task")
-root.geometry("900x600")
+root.geometry("1600x900")
 cutie_style(root)
 
 main_frame = ttk.Frame(root)
