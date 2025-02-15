@@ -6,6 +6,8 @@ import task1
 from task1 import plot_graph
 from task2 import show_task2_inputs
 from task3 import show_task3_inputs
+from task4 import show_task4_inputs
+from task5 import show_task5_inputs
 from task6 import task6
 from task7 import task7
 from task8 import task8
@@ -34,9 +36,9 @@ def show_task_inputs(*args):
     elif task == 'Task 3':
         show_task3_inputs(frame)
     elif task == 'Task 4':
-        a = True            # TODO
+        show_task4_inputs(frame)
     elif task == 'Task 5':
-        a = True            # TODO
+        show_task5_inputs(frame)
     elif task == 'Task 6':
         ttk.Button(frame, text="Calculate", command=task6).pack(pady=10)
     elif task == 'Task 7':
