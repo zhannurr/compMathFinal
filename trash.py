@@ -1,38 +1,36 @@
-import tkinter as tk
+from tkinter import *
 
-class App(tk.Frame):
-    def __init__(self, master):
-        super().__init__(master)
-        self.pack()
 
-        self.entrythingy = tk.Entry()
-        self.entrythingy.pack()
+root = Tk()                                                     # Не помню
 
-        # Create the application variable.
-        self.contents = tk.StringVar()
-        # Set it to some value.
-        self.contents.set("this is a variable")
-        # Tell the entry widget to watch this variable.
-        self.entrythingy["textvariable"] = self.contents
+root['bg'] = '#baf6ff'                                          # Цвет заднего фона окна
+root.geometry('900x600')                                        # Размер окна
+root.title('Computational Mathematics - Final Project')         # Название приложения
+# root.wm_attributes('-alpha', 0.9)                               # Прозрачность
 
-        # Define a callback for when the user hits return.
-        # It prints the current value of the variable.
-        self.entrythingy.bind('<Key-Return>',
-                             self.print_contents)
+root.resizable(False, False)                        # Не изменяемое окно
 
-    def print_contents(self, event):
-        print("Hi. The current entry content is:",
-              self.contents.get())
+canvas = Canvas(root, width=300, height=300)                    # Канвас для рисования в нутри окна
+canvas.pack()                                                   # Располагаем канвас
 
-# create the application
-root = tk.Tk()
-myapp = App(root)
+frame = Frame(root, bg='black')                                   # Фрейм, хз для чего
+frame.pack()                         #
 
-#
-# here are method calls to the window manager class
-#
-myapp.master.title("My Do-Nothing Application")
-myapp.master.maxsize(1000, 400)
+title = Label(frame, text="Text", bg="gray", font=40)
+title.pack()
 
-# start the program
-myapp.mainloop()
+def btn_click():
+    print(entry.get())
+btn = Button(frame, text="Button", bg="yellow", command=btn_click)
+btn.pack()
+
+entry = Entry(root, bg="white")
+entry.pack()
+
+
+
+# frm = Frame(root, padding=100)
+# frm.grid()
+# ttk.Label(frm, text="Hello World!").grid(column=0, row=0)
+# ttk.Button(frm, text="Quit", command=root.destroy).grid(column=1, row=0)
+root.mainloop()

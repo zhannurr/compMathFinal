@@ -1,13 +1,14 @@
-from tkinter import ttk
 import numpy as np
 import matplotlib.pyplot as plt
 
 
+# Task 8: Simpson's 1/3 Rule
 def f(x):
     """
     Function to integrate: sin(x)
     """
     return np.sin(x)
+
 
 def simpsons_rule(f, a, b, n):
     """
@@ -28,6 +29,7 @@ def simpsons_rule(f, a, b, n):
     # Apply Simpson's Rule formula
     integral = (h / 3) * (y[0] + 4 * sum(y[1:n:2]) + 2 * sum(y[2:n - 1:2]) + y[n])
     return integral
+
 
 def plot_function(f, a, b, n):
     """
@@ -51,24 +53,12 @@ def plot_function(f, a, b, n):
     plt.grid()
     plt.show()
 
-def task8():
-    # for widget in frame.winfo_children():
-    #     widget.destroy()
-    #
-    # style = ttk.Style()
-    # style.configure("TLabel", font=("Arial", 15), background="#baf6ff")
-    # style.configure("TButton", font=("Arial", 15), padding=6)
-    # style.configure("TEntry", font=("Arial", 15), padding=5)
-    # style.configure("TCombobox", font=("Arial", 15), padding=5)
 
+def task6():
     # Given limits and subintervals
     a = 0
     b = np.pi
     n = 10  # Number of subintervals (must be even)
-    # entry_a = ttk.Entry(frame)
-    # entry_a.pack(pady=5)
-    # entry_b = ttk.Entry(frame)
-    # entry_b.pack(pady=5)
 
     # Compute numerical integral
     approx_integral = simpsons_rule(f, a, b, n)
@@ -86,3 +76,24 @@ def task8():
 
     # Plot the function and Simpson's Rule approximation
     plot_function(f, a, b, n)
+
+
+    # Task 6: Newton’s Forward Difference Formula
+    def newtons_forward_difference(x, y, x_target):
+        """
+        Compute first derivative using Newton's Forward Difference Formula.
+        """
+        h = x[1] - x[0]
+        dy_dx = (y[1] - y[0]) / h + ((y[2] - 2 * y[1] + y[0]) / (2 * h))
+        return dy_dx
+
+
+    # Given data points
+    x_values = np.array([0, 1, 2])
+    y_values = np.array([1, 3, 7])
+    x_target = 1
+
+    # Compute derivative at x=1
+    first_derivative = newtons_forward_difference(x_values, y_values, x_target)
+    print("\nTask 6: Newton’s Forward Difference Formula")
+    print(f"First Derivative at x={x_target}: {first_derivative:.6f}")
